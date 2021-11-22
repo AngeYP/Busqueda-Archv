@@ -33,8 +33,16 @@ int main (void){
 
 void protocolo_UDP() {
   int opcion = 0;
+  char * portopt = malloc(1);
+  int port = 2002;
   system("clear");
-
+  printf("Desea cambiar el puerto y/n (Puerto predeterminado: 2002)\n");
+  scanf("%s",portopt);
+  if (portopt[0] == 'y') {
+    printf("\nIntroduzca el numero del puerto: ");
+    scanf("%i",&port);
+  }
+  system("clear");
   printf("\nEste computador servira como: \n");
   printf("1. Cliente\n" );
   printf("2. Servidor\n" );
@@ -43,9 +51,9 @@ void protocolo_UDP() {
   printf("Introduzca el numero: " );
   scanf("%i",&opcion);
   switch(opcion){
-    case 1: cliente_UDP();
+    case 1: cliente_UDP(port);
             break;
-    case 2: servidor_UDP();
+    case 2: servidor_UDP(port);
              break;
     case 3: return;
     case 4: exit(1);

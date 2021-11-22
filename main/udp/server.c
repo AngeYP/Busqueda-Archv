@@ -10,11 +10,11 @@
 #include <unistd.h>
 #include "header/servidor.h"
 
-#define PORT 2002
+//#define PORT 2002
 #define MAXLINE 1000
   
 // Driver code
-void servidor_UDP()
+void servidor_UDP(int PORT)
 {   
     char buffer[100];
     char * bufferito = 0;

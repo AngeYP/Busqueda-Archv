@@ -10,12 +10,12 @@
 #include <stdlib.h>
 #include "header/cliente.h"
   
-#define PORT 2002
+//#define PORT 2002
 #define MAXLINE 1000
 #define MAXFIND 500
   
 // Driver code
-void cliente_UDP() {
+void cliente_UDP(int PORT) {
 
     system("clear");
 
