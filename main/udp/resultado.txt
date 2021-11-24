@@ -1,2 +1,0 @@
-./prueba/prueba.txt
-./prueba/otraprueba/prueba.txt

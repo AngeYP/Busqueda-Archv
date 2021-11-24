@@ -40,59 +40,6 @@ void servidor_UDP(int PORT)
     int n = recvfrom(listenfd, buffer, sizeof(buffer),
             0, (struct sockaddr*)&cliaddr,&len); //receive message from server
     buffer[n] = '\0';
-
-/****FUNCION FORK QUE NO FUNCIONA Y NO SE NECESITA***********/
-    // int fd[2]; //fd[0] - read //fd[1] -write
-
-    // if(pipe(fd) == -1) {
-    //   printf("An error ocurred\n");
-    //   return 1;
-    // }
-
-    // int id = fork();
-
-    // if (id != 0) 
-    //   wait();
-
-    // if (id == 0)
-    // {
-    //   close(fd[0]);
-
-    //   strcat(buffer," > resultado.txt");
-    //   system(buffer);
-
-    //   FILE * f = fopen ("resultado.txt", "rb");
-
-    //   if (f)
-    //   {
-    //     fseek (f, 0, SEEK_END);
-    //     length = ftell (f);
-    //     fseek (f, 0, SEEK_SET);
-    //     bufferito = malloc (length);
-    //     if (bufferito)
-    //     {
-    //       fread (bufferito, 1, length, f);
-    //     }
-    //     fclose (f);
-    //   }
-
-    //   printf("%li\n",strlen(bufferito));
-
-    //   write(fd[1], bufferito, strlen(bufferito));
-    //   close(fd[1]);
-    //   //exit(0);
-    // } 
-    // else {
-
-    //   close(fd[1]);
-    //   char bufferito[MAXLINE];
-    //   read(fd[0], bufferito, strlen(bufferito));
-    //   close(fd[0]);
-
-    //   // send the response
-    //   sendto(listenfd, bufferito, MAXLINE, 0,
-    //         (struct sockaddr*)&cliaddr, sizeof(cliaddr));
-    // }
     
     printf("\nComando buscado: %s\n",buffer);
 
