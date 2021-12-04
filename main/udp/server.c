@@ -66,5 +66,6 @@ void servidor_UDP(int PORT)
           (struct sockaddr*)&cliaddr, sizeof(cliaddr));
     printf("\nRESULTADOS\n%s\n\n",bufferito);
     printf("Resultados enviados\n");
+    remove("resultado.txt");
     exit(1);
 }
