@@ -41,9 +41,6 @@ void cliente_TCP(int PORT)
 	int sockfd, connfd;
 	struct sockaddr_in servaddr, cli;
 
-	char *ip = malloc(15);
-    askipaddress(ip);
-
 	// socket create and varification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
@@ -56,7 +53,7 @@ void cliente_TCP(int PORT)
 
 	// assign IP, PORT
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = inet_addr(ip);
+	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	servaddr.sin_port = htons(PORT);
 
 	// connect the client socket to server socket
@@ -72,12 +69,4 @@ void cliente_TCP(int PORT)
 
 	// close the socket
 	close(sockfd);
-}
-
-void askipaddress(char * data) {
-
-  	puts("\nIntroduzca la direccion IP");
-	scanf("%s",data);
-	if ((strlen(data) > 0) && (data[strlen (data) - 1] == '\n'))
-                data[strlen (data) - 1] = '\0';
 }

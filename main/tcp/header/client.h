@@ -3,6 +3,5 @@
 
 void funcliente(int);
 void cliente_TCP(int);
-void askipaddress(char *);
 
 #endif /* CLIENTTCP_DOT_H */
