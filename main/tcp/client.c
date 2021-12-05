@@ -9,7 +9,6 @@
 #include "header/client.h"
 
 #define MAX 1000
-// #define PORT 8080
 #define SA struct sockaddr
 
 typedef struct ConnectInfo{
@@ -34,11 +33,13 @@ void * connectTCPClient (void *args){
 
     strcpy(buff,p->finddata);
 
+    //if the ip direction its local search in current computer
     if(strcmp(ip,"127.0.0.1") == 0) {
     	findfile(buff,ip);
     }
     else {
 
+        //server info
 	    p->servaddr.sin_family = AF_INET;
 		p->servaddr.sin_addr.s_addr = inet_addr(ip);
 		p->servaddr.sin_port = htons(p->PORT);
@@ -57,9 +58,12 @@ void * connectTCPClient (void *args){
 		getchar();
 		system("clear");
 
+        //send data to server
 		write(p->sockfd,buff, strlen(buff));
 
 		bzero(buff, strlen(buff));
+
+        //receive server data
 		read(p->sockfd, buffer, sizeof(buffer));
 		system("clear");
 		printf("RESULTADOS DEL SERVIDOR %s \n%s",ip,buffer);
@@ -83,6 +87,7 @@ void cliente_TCP(int PORT)
 
 	system("clear");
 
+/**************************************OPCIONES DE INICIO******************************************/
 	do {
         printf("Elegir una opcion:\n1. Comenzar una busqueda\n2. Recibir ayudar\n3. Salir\nIntroduzca el numero: ");
         scanf("%i",&option);
@@ -96,6 +101,7 @@ void cliente_TCP(int PORT)
         }
         system("clear");
     } while (option!=1);
+/*************************************FIN OPCIONES DE INICIO***************************************/
 
 	// socket create and varification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -114,12 +120,13 @@ void cliente_TCP(int PORT)
     info.sockfd = sockfd;
     info.servaddr = servaddr;
 
-/**********************************AQUI VA EL CICLO DE HILOS***************************************/
+/****************************************COMIENZO DE LOS HILOS*************************************/
 
 	tid = (pthread_t *)malloc(count * sizeof(pthread_t *));
 
     pthread_mutex_init(&mutex, NULL);
 
+    //for every server to connect we create a thread
     for (int i = 0; i < count; ++i)
     {
         if (pthread_create(tid + i, NULL, &connectTCPClient, (void *)&info) != 0)
@@ -133,10 +140,7 @@ void cliente_TCP(int PORT)
     
     pthread_mutex_destroy(&mutex);
 
-	// close the socket
-
-
-/********************************FIN AQUI VA EL CICLO DE HILOS*************************************/
+/****************************************FIN DE LOS HILOS******************************************/
 }
 
 /*******************************LLENADO DE LAS DIRECCIONES IP**************************************/
@@ -171,6 +175,7 @@ void askipaddress(char * data) {
 }
 /***********************************FIN PEDIR LA DIRECCION IP**************************************/
 
+/***********************************BUSCAR EN COMPUTADOR LOCAL*************************************/
 void findfile(char * buffer, char * ip) {
     system("clear");
     char * bufferito = 0;
@@ -205,3 +210,4 @@ void findfile(char * buffer, char * ip) {
     getchar();
     getchar();
 }
+/*********************************FIN BUSCAR EN COMPUTADOR LOCAL***********************************/

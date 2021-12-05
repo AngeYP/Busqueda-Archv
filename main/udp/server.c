@@ -43,11 +43,12 @@ void servidor_UDP(int PORT)
     
     printf("\nComando buscado: %s\n",buffer);
 
+    //run find command and save results in a file
     strcat(buffer," > resultado.txt");
     system(buffer);
 
+    // retrive results from file and copy them in a string
     FILE * f = fopen ("resultado.txt", "rb");
-
     if (f)
     {
       fseek (f, 0, SEEK_END);

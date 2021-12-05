@@ -12,7 +12,6 @@
 #include "header/tserver.h"
 
 #define MAX 1000
-// #define PORT 8080
 #define SA struct sockaddr
 
 // Function designed for chat between client and server.
@@ -34,12 +33,13 @@ void funtserver(int * sockfd)
     // if msg contains "Exit" then server exit and chat ended.
 	printf("\nComando a consultar: %s\n", buff);
 
+	//run find command and save results in a file
 	buff[strcspn(buff, "\n")] = 0;
     strcat(buff," > resultado.txt");
     system(buff);
 
+    // retrive results from file and copy them in a string
     FILE * f = fopen ("resultado.txt", "rb");
-
     if (f) {
 		fseek (f, 0, SEEK_END);
 		length = ftell (f);
@@ -56,6 +56,7 @@ void funtserver(int * sockfd)
     n = 0;
     strcpy(buff, bufferito);
 
+    //send the response
     write(*sockfd, buff, sizeof(buff));
 
     printf("RESULTADOS:\n%s\n",buff);
@@ -118,6 +119,7 @@ void tserver_TCP(int PORT)
 	else
 		printf("server accept the client...\n");
 
+	//thread function to receive, search and send information
 	pthread_create(&tid, NULL, (void *) funtserver, &connfd);
 	pthread_join(tid,NULL);
 	sleep(1);
