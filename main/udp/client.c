@@ -133,7 +133,8 @@ void cliente_UDP(int PUERTO) {
 /************************************LLENADO DEL COMANDO FIND**************************************/
 void askfind(char * finddata) {
     getchar();
-    printf("Introduzca el comando find con su informacion\n");
+    printf("-> SISTANXIS: find [ruta] [parámetros] [valores]\n\n");
+    printf("Introduzca el comando find con su informacion:\n");
     fgets(finddata, MAXFIND, stdin);
 
     if ((strlen(finddata) > 0) && (finddata[strlen (finddata) - 1] == '\n'))
