@@ -11,7 +11,6 @@
 #include "header/fserver.h"
 
 #define MAX 1000
-// #define PORT 8080
 #define SA struct sockaddr
 
 // Function designed for chat between client and server.
@@ -33,12 +32,13 @@ void funfserver(int sockfd)
     // if msg contains "Exit" then server exit and chat ended.
 	printf("\nComando a consultar: %s\n", buff);
 
+	//run find command and save results in a file
 	buff[strcspn(buff, "\n")] = 0;
 	strcat(buff," > resultado.txt");
 	system(buff);
 
+	// retrive results from file and copy them in a string
 	FILE * f = fopen ("resultado.txt", "rb");
-
 	if (f) {
 		fseek (f, 0, SEEK_END);
 		length = ftell (f);
@@ -54,6 +54,7 @@ void funfserver(int sockfd)
 	n = 0;
 	strcpy(buff, bufferito);
 
+	//send the response
 	write(sockfd, buff, sizeof(buff));
 
 	printf("RESULTADOS:\n%s\n",buff);
@@ -118,6 +119,7 @@ void fserver_TCP(int PORT)
 
 	system("clear");
 
+	//call function to receive, search and send data when child process its running
 	if((childpid = fork()) == 0){
 		close(sockfd);// Function for chatting between client and server
 		funfserver(connfd);
@@ -125,6 +127,8 @@ void fserver_TCP(int PORT)
 
 		// After chatting close the socket
 	close(sockfd);
+
+	//wait for child process to finnish to close the program
 	if (childpid!=0)
 	{
 		wait(NULL);

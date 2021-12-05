@@ -30,6 +30,7 @@ int main (void){
   }while(opcion != 3);
 }
 
+//UDP PROTOCOL
 void protocolo_UDP() {
   int opcion = 0;
   char * portopt = malloc(1);
@@ -56,6 +57,7 @@ void protocolo_UDP() {
   }
 }
 
+//TCP PROTOCOL
 void protocolo_TCP(){
   int opcion = 0; int numero_puerto = 0; char respuesta[10]; ; char temp[10];
   char * portopt = malloc(1);
@@ -65,12 +67,14 @@ void protocolo_TCP(){
   printf("Introduzca una opcion: ");
   scanf("%i",&opcion);
   switch(opcion){
+    //CLIENT
     case 1: {
       system("clear");
       puts("1. Servidor con procesos\n2. Servidor con hilos\n3. Regresar\n4. Salir\n");
       printf("Introduzca una opcion: ");
       scanf("%i",&opcport);
       switch(opcport){
+        //CLIENT WITH FORK SERVER 
         case 1: {
           puts("Desea cambiar el puerto y/n (Puerto predeterminado: 2002)");
           printf("Introduzca una opcion: ");
@@ -81,6 +85,7 @@ void protocolo_TCP(){
           }
           cliente_TCP(2002); 
         }break;
+        //CLIENT WITH THREAD SERVER
         case 2: {
           puts("Desea cambiar el puerto y/n (Puerto predeterminado: 2020)");
           printf("Introduzca una opcion: ");
@@ -106,6 +111,7 @@ void protocolo_TCP(){
         opcion = atoi(temp);
         switch(opcion){
           case 1: do{
+            //SERVER WITH FORK
             puts("\nDeseas escribir el numero del puerto y/n (puerto por defecto 2002)");
             printf("Introduzca una opcion: ");
             fgets(respuesta,10,stdin);
@@ -120,7 +126,7 @@ void protocolo_TCP(){
           }while ((strcmp(respuesta,"y")!=0) && (strcmp(respuesta,"n")!=0));
           fserver_TCP(numero_puerto);
           break;
-
+          //SERVER WITH THREAD
           case 2: do{
             puts("\nDeseas escribir el numero del puerto y/n (puerto por defecto 2020)");
             printf("Introduzca una opcion: ");

@@ -32,32 +32,36 @@ void * connectClient (void *args){
     ConnectInfo *p = (ConnectInfo *) args;
     char *ip = malloc(MAXFIND);
 
+    // ask for a ip direction
     askipadress(ip);
 
+    //if the ip direction its local search in current computer
     if(strcmp(ip,"127.0.0.1") == 0) {
         findfiles(p->finddata,ip);
     }
 
     else {
 
+        //server info
         bzero(&servaddr, sizeof(ip));
         servaddr.sin_addr.s_addr = inet_addr(ip);
         servaddr.sin_port = htons(p->PORT);
         servaddr.sin_family = AF_INET;
-          
+
         // create datagram socket
         sockfd = socket(AF_INET, SOCK_DGRAM, 0);
           
         // connect to server
-
         if(connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
         {
             printf("\n Error : Connect Failed \n");
             exit(0);
         }
       
+        //send request
         sendto(sockfd, p->finddata, MAXLINE, 0, (struct sockaddr*)NULL, sizeof(servaddr));
           
+        //recieve results
         recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)NULL, NULL);
         system("clear");
         printf("RESULTADOS DEL SERVIDOR %s \n%s",ip,buffer);
@@ -99,8 +103,6 @@ void cliente_UDP(int PUERTO) {
     } while (option!=1);
 
     count = numberserv();
-
-    //count = askipadress(filename);
 /*************************************FIN OPCIONES DE INICIO***************************************/
     
     info.finddata = findcommand;
@@ -111,6 +113,7 @@ void cliente_UDP(int PUERTO) {
 
     pthread_mutex_init(&mutex, NULL);
 
+    //for every server to connect we create a thread
     for (int i = 0; i < count; ++i)
     {
         if (pthread_create(th + i, NULL, &connectClient, (void *)&info) != 0)
@@ -138,7 +141,7 @@ void askfind(char * finddata) {
 }
 /********************************FIN LLENADO DEL COMANDO FIND**************************************/
 
-/*******************************LLENADO DE LAS DIRECCIONES IP**************************************/
+/**************************PEDIR EL NUMERO TOTAL DE SERVIDOR A BUSCAR******************************/
 int numberserv() {
     system("clear");
     int count = 0;
@@ -147,8 +150,9 @@ int numberserv() {
 
     return count;
 }
-/*****************************FIN LLENADO DE LAS DIRECCIONES IP************************************/
+/************************FIN PEDIR EL NUMERO TOTAL DE SERVIDOR A BUSCAR****************************/
 
+/*************************************PEDRI LA DIRECCION IP****************************************/
 void askipadress(char * ip) {
     system("clear");
     getchar();
@@ -158,7 +162,9 @@ void askipadress(char * ip) {
     if ((strlen(ip) > 0) && (ip[strlen (ip) - 1] == '\n'))
         ip[strlen (ip) - 1] = '\0';
 }
+/***********************************FIN PEDIR LA DIRECCION IP**************************************/
 
+/***********************************BUSCAR EN COMPUTADOR LOCAL*************************************/
 void findfiles(char * buffer, char * ip) {
     system("clear");
     char * bufferito = 0;
@@ -192,3 +198,4 @@ void findfiles(char * buffer, char * ip) {
     printf("\nPor favor, presiones ENTER para continuar\n");
     getchar();
 }
+/*********************************FIN BUSCAR EN COMPUTADOR LOCAL***********************************/
