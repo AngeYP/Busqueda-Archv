@@ -8,14 +8,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "header/fserver.h"
+#include <pthread.h>
+#include "header/tserver.h"
 
 #define MAX 1000
 // #define PORT 8080
 #define SA struct sockaddr
 
 // Function designed for chat between client and server.
-void funfserver(int sockfd)
+void funtserver(int * sockfd)
 {
 	char buff[MAX];
 	int n;
@@ -28,35 +29,36 @@ void funfserver(int sockfd)
 
 	bzero(buff, MAX);
 	// read the message from client and copy it in buffer
-	read(sockfd, buff, sizeof(buff));
+	read(*sockfd, buff, sizeof(buff));
 
     // if msg contains "Exit" then server exit and chat ended.
 	printf("\nComando a consultar: %s\n", buff);
 
 	buff[strcspn(buff, "\n")] = 0;
-	strcat(buff," > resultado.txt");
-	system(buff);
+    strcat(buff," > resultado.txt");
+    system(buff);
 
-	FILE * f = fopen ("resultado.txt", "rb");
+    FILE * f = fopen ("resultado.txt", "rb");
 
-	if (f) {
+    if (f) {
 		fseek (f, 0, SEEK_END);
 		length = ftell (f);
 		fseek (f, 0, SEEK_SET);
 		bufferito = malloc (length);
-		if (bufferito)	{
+		if (bufferito)
+		{
 			fread (bufferito, 1, length, f);
 		}
 		fclose (f);
-	}
+    }
 
-	bzero(buff, MAX);
-	n = 0;
-	strcpy(buff, bufferito);
+    bzero(buff, MAX);
+    n = 0;
+    strcpy(buff, bufferito);
 
-	write(sockfd, buff, sizeof(buff));
+    write(*sockfd, buff, sizeof(buff));
 
-	printf("RESULTADOS:\n%s\n",buff);
+    printf("RESULTADOS:\n%s\n",buff);
 	printf("Resultados enviados\n\n");
 	remove("resultado.txt");
 	printf("Presione ENTER para continuar\n");
@@ -67,13 +69,13 @@ void funfserver(int sockfd)
 }
 
 // Driver function
-void fserver_TCP(int PORT)
+void tserver_TCP(int PORT)
 {
 	system("clear");
 	int sockfd, connfd, len;
 	struct sockaddr_in servaddr, cli;
 	pid_t childpid;
-
+  	pthread_t tid;
 	// socket create and verification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if (sockfd == -1) {
@@ -116,21 +118,11 @@ void fserver_TCP(int PORT)
 	else
 		printf("server accept the client...\n");
 
-	system("clear");
+	pthread_create(&tid, NULL, (void *) funtserver, &connfd);
+	pthread_join(tid,NULL);
+	sleep(1);
 
-	if((childpid = fork()) == 0){
-		close(sockfd);// Function for chatting between client and server
-		funfserver(connfd);
-	}
-
-		// After chatting close the socket
 	close(sockfd);
-	if (childpid!=0)
-	{
-		wait(NULL);
-	}
-	if (childpid!=0)
-	{
-		exit(1);
-	}
+	pthread_exit(NULL);
+
 }
