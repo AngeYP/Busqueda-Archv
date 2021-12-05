@@ -33,7 +33,7 @@ void * connectTCPClient (void *args){
 
     strcpy(buff,p->finddata);
 
-    //if the ip direction its local search in current computer
+    //if the ip address its local search in current computer
     if(strcmp(ip,"127.0.0.1") == 0) {
     	findfile(buff,ip);
     }

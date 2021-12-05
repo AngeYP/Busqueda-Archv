@@ -32,10 +32,10 @@ void * connectClient (void *args){
     ConnectInfo *p = (ConnectInfo *) args;
     char *ip = malloc(MAXFIND);
 
-    // ask for a ip direction
+    // ask for a ip address
     askipadress(ip);
 
-    //if the ip direction its local search in current computer
+    //if the ip address its local search in current computer
     if(strcmp(ip,"127.0.0.1") == 0) {
         findfiles(p->finddata,ip);
     }
