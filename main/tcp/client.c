@@ -157,7 +157,8 @@ int numberservers() {
 /************************************LLENADO DEL COMANDO FIND**************************************/
 void askfindcommand(char * finddata) {
     getchar();
-    printf("Introduzca el comando find con su informacion\n");
+    printf("-> SISTANXIS: find [ruta] [parámetros] [valores]\n\n");
+    printf("Introduzca el comando find con su informacion:\n");
     fgets(finddata, MAX, stdin);
 
     if ((strlen(finddata) > 0) && (finddata[strlen (finddata) - 1] == '\n'))
