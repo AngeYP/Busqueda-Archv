@@ -8,7 +8,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include "header/servidor.h"
+#include "../inc/servidor.h"
 
 //#define PORT 2002
 #define MAXLINE 1000

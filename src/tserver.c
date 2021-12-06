@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <pthread.h>
-#include "header/tserver.h"
+#include "../inc/tserver.h"
 
 #define MAX 1000
 #define SA struct sockaddr
@@ -18,7 +18,6 @@
 void funtserver(int * sockfd)
 {
 	char buff[MAX];
-	int n;
 	char * bufferito = 0;
     long length;
 
@@ -53,7 +52,6 @@ void funtserver(int * sockfd)
     }
 
     bzero(buff, MAX);
-    n = 0;
     strcpy(buff, bufferito);
 
     //send the response
@@ -75,7 +73,6 @@ void tserver_TCP(int PORT)
 	system("clear");
 	int sockfd, connfd, len;
 	struct sockaddr_in servaddr, cli;
-	pid_t childpid;
   	pthread_t tid;
 	// socket create and verification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);

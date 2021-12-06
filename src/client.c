@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "header/cliente.h"
+#include "../inc/cliente.h"
   
 //#define PORT 2002
 #define MAXLINE 1000
@@ -27,7 +27,7 @@ void * connectClient (void *args){
     pthread_mutex_lock(&mutex1);
 
     char buffer[5000];
-    int sockfd, n;
+    int sockfd;
     struct sockaddr_in servaddr;
     ConnectInfo *p = (ConnectInfo *) args;
     char *ip = malloc(MAXFIND);
@@ -84,8 +84,6 @@ void cliente_UDP(int PUERTO) {
     ConnectInfo info;
     int option = 0;
     pthread_t *th;
-    char *ip = malloc(15);
-    char aux [1000];
 
 /**************************************OPCIONES DE INICIO******************************************/
     do {

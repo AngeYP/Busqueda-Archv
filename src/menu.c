@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "udp/header/cliente.h"
-#include "udp/header/servidor.h"
-#include "tcp/header/client.h"
-#include "tcp/header/fserver.h"
-#include "tcp/header/tserver.h"
+#include "../inc/cliente.h"
+#include "../inc/servidor.h"
+#include "../inc/tclient.h"
+#include "../inc/fserver.h"
+#include "../inc/tserver.h"
 
 void protocolo_UDP();
 void protocolo_TCP();

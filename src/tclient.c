@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <pthread.h>
-#include "header/client.h"
+#include "../inc/tclient.h"
 
 #define MAX 1000
 #define SA struct sockaddr
@@ -51,8 +51,6 @@ void * connectTCPClient (void *args){
 		else
 			printf("connected to the server..\n");
 
-		int n = 0;
-
 		printf("Presione ENTER para continuar\n");
 		getchar();
 		system("clear");
@@ -77,11 +75,10 @@ void * connectTCPClient (void *args){
 
 void cliente_TCP(int PORT)
 {
-	int sockfd, connfd, count, option;
-	struct sockaddr_in servaddr, cli;
+	int sockfd, count, option;
+	struct sockaddr_in servaddr;
 	char *findcommand = malloc(MAX);
 	pthread_t *tid;
-	char *ip = malloc(15);
 	ConnectInfo info;
 
 	system("clear");

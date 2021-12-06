@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include "header/fserver.h"
+#include "../inc/fserver.h"
 
 #define MAX 1000
 #define SA struct sockaddr
@@ -17,7 +17,6 @@
 void funfserver(int sockfd)
 {
 	char buff[MAX];
-	int n;
 	char * bufferito = 0;
     long length;
 
@@ -51,7 +50,6 @@ void funfserver(int sockfd)
 	}
 
 	bzero(buff, MAX);
-	n = 0;
 	strcpy(buff, bufferito);
 
 	//send the response
