@@ -43,7 +43,6 @@ void * connectTCPClient (void *args){
 	    p->servaddr.sin_family = AF_INET;
 		p->servaddr.sin_addr.s_addr = inet_addr(ip);
 		p->servaddr.sin_port = htons(p->PORT);
-
 		// connect the client socket to server socket
 		if (connect(p->sockfd, (SA*)(&p->servaddr), sizeof(p->servaddr)) != 0) {
 			printf("connection with the server failed...\n");

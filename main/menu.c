@@ -76,6 +76,7 @@ void protocolo_TCP(){
       switch(opcport){
         //CLIENT WITH FORK SERVER 
         case 1: {
+          numero_puerto = 2002;
           puts("Desea cambiar el puerto y/n (Puerto predeterminado: 2002)");
           printf("Introduzca una opcion: ");
           scanf("%s",portopt);
@@ -83,10 +84,11 @@ void protocolo_TCP(){
             printf("\nIntroduzca el numero del puerto: ");
             scanf("%i",&numero_puerto);
           }
-          cliente_TCP(2002); 
+          cliente_TCP(numero_puerto); 
         }break;
         //CLIENT WITH THREAD SERVER
         case 2: {
+          numero_puerto = 2020;
           puts("Desea cambiar el puerto y/n (Puerto predeterminado: 2020)");
           printf("Introduzca una opcion: ");
           scanf("%s",portopt);
@@ -94,7 +96,7 @@ void protocolo_TCP(){
             printf("\nIntroduzca el numero del puerto: ");
             scanf("%i",&numero_puerto);
           }
-          cliente_TCP(2020); 
+          cliente_TCP(numero_puerto); 
         } break;
         case 3: return;
         case 4: exit(1);

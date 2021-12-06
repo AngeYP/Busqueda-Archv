@@ -20,13 +20,13 @@ typedef struct ConnectInfo{
     char *finddata;
 } ConnectInfo;
 
-pthread_mutex_t mutex;
+pthread_mutex_t mutex1;
 
 void * connectClient (void *args){
 
-    pthread_mutex_lock(&mutex);
+    pthread_mutex_lock(&mutex1);
 
-    char buffer[100];
+    char buffer[5000];
     int sockfd, n;
     struct sockaddr_in servaddr;
     ConnectInfo *p = (ConnectInfo *) args;
@@ -71,7 +71,7 @@ void * connectClient (void *args){
         close(sockfd);
     }
 
-    pthread_mutex_unlock(&mutex);
+    pthread_mutex_unlock(&mutex1);
 }
   
 // Driver code
@@ -111,7 +111,7 @@ void cliente_UDP(int PUERTO) {
 /****************************************COMIENZO DE LOS HILOS*************************************/
     th = (pthread_t *)malloc(count * sizeof(pthread_t *));
 
-    pthread_mutex_init(&mutex, NULL);
+    pthread_mutex_init(&mutex1, NULL);
 
     //for every server to connect we create a thread
     for (int i = 0; i < count; ++i)
@@ -125,7 +125,7 @@ void cliente_UDP(int PUERTO) {
             return;
     }
     
-    pthread_mutex_destroy(&mutex);
+    pthread_mutex_destroy(&mutex1);
 /****************************************FIN DE LOS HILOS******************************************/
 }
 
