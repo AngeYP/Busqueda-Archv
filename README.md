@@ -14,3 +14,6 @@ El proyecto está divido en 3 partes:
     Código del servidor mediante hilos.
     Código del servidor mediante procesos.
     Headers para las funciones.
+
+Video de demostración del proyecto:
+https://drive.google.com/file/d/153vZhykug5maM3A6bjjvfsPBZCXD8qZS/view?usp=sharing
